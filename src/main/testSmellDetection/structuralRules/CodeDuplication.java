@@ -1,6 +1,7 @@
 package main.testSmellDetection.structuralRules;
 
 import java.io.File;
+import java.io.IOException;
 
 public abstract class CodeDuplication {
 
