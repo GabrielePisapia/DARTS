@@ -3,6 +3,8 @@ package main.testSmellDetection.testSmellInfo.lazyTest;
 import main.testSmellDetection.bean.PsiClassBean;
 import main.testSmellDetection.testSmellInfo.TestSmellInfo;
 
+import java.util.ArrayList;
+
 public class LazyTestInfo extends TestSmellInfo {
     private PsiClassBean productionClass;
     private ArrayList<MethodWithLazyTest> metodiInfetti;
