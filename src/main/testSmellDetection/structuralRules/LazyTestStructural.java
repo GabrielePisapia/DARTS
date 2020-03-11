@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
-public abstract class LazyTest {
+public abstract class LazyTestStructural {
 
 
 

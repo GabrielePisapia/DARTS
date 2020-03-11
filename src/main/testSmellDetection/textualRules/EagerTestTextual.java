@@ -57,6 +57,7 @@ public abstract class EagerTestTextual {
                         PsiReference reference = callExpression.getMethodExpression().getReference();
                         if(reference != null){
                             PsiMethod calledMethod = (PsiMethod) reference.resolve();
+                            /*Qua ci vuole l'if al posto del for che vede se called method è in methodsInProduction, se non c'è si aumenta il contatore e si aggiunge*/
                             for(PsiMethodBean methodInProduction : methodsInProduction){
                                 if(calledMethod.getName().toLowerCase().equals(methodInProduction.getPsiMethod().getName().toLowerCase())){
                                     count ++;

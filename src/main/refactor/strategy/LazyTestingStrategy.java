@@ -25,6 +25,8 @@ public class LazyTestingStrategy implements IRefactor {
     public void doRefactor() throws PrepareFailedException{
         PsiClassBean classBeanPsi = lazyTestInfo.getClassWithLazyTest();
         PsiClass classPsi = classBeanPsi.getPsiClass();
+        String nomeMetooDaRefattorizzare = methodWithLazyTest.getMethodWithLazyTest().getName();
+
 
     }
 

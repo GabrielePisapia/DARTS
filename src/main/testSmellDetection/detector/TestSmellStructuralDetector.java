@@ -5,11 +5,14 @@ import main.testSmellDetection.bean.PsiClassBean;
 import main.testSmellDetection.bean.PsiMethodBean;
 import main.testSmellDetection.structuralRules.EagerTestStructural;
 import main.testSmellDetection.structuralRules.GeneralFixtureStructural;
+import main.testSmellDetection.structuralRules.IndirectTestingStructural;
 import main.testSmellDetection.structuralRules.LackOfCohesionOfTestSmellStructural;
 import main.testSmellDetection.testSmellInfo.eagerTest.EagerTestInfo;
 import main.testSmellDetection.testSmellInfo.eagerTest.MethodWithEagerTest;
 import main.testSmellDetection.testSmellInfo.generalFixture.GeneralFixtureInfo;
 import main.testSmellDetection.testSmellInfo.generalFixture.MethodWithGeneralFixture;
+import main.testSmellDetection.testSmellInfo.indirectTesting.IndirectTestingInfo;
+import main.testSmellDetection.testSmellInfo.indirectTesting.MethodWithIndirectTesting;
 import main.testSmellDetection.testSmellInfo.lackOfCohesion.LackOfCohesionInfo;
 import main.testSmellDetection.textualRules.EagerTestTextual;
 import main.testSmellDetection.textualRules.GeneralFixtureTextual;
@@ -67,5 +70,19 @@ public class TestSmellStructuralDetector implements IDetector{
             }
         }
         return classesWithLackOfCohesion;
+    }
+
+    /*Inserisci qui indirect e lazy test per chiamare la detection*/
+
+    public ArrayList<IndirectTestingInfo> executeDetectionForIndirectTesting(){
+        ArrayList<IndirectTestingInfo> classesWithIndTest = new ArrayList<>();
+        int i = 0;
+        for (PsiClassBean testClass: testClasses){
+            if (IndirectTestingStructural.isIndirectTesting(testClass.getPsiMethodBeans().get(i),productionClasses.get(i)) != 0 ){
+                ArrayList<MethodWithIndirectTesting> methodWithIndirectTestings = IndirectTestingStructural.checkMethodsThatCauseIndTest(testClass,testClass.getProductionClass());
+                classesWithIndTest.add(new IndirectTestingInfo(testClass,testClass.getProductionClass(),methodWithIndirectTestings));
+                }
+        }
+        return classesWithIndTest;
     }
 }
