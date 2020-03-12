@@ -6,6 +6,7 @@ import main.testSmellDetection.detector.IDetector;
 import main.testSmellDetection.detector.TestSmellStructuralDetector;
 import main.testSmellDetection.testSmellInfo.eagerTest.EagerTestInfo;
 import main.testSmellDetection.testSmellInfo.generalFixture.GeneralFixtureInfo;
+import main.testSmellDetection.testSmellInfo.indirectTesting.IndirectTestingInfo;
 import main.testSmellDetection.testSmellInfo.lackOfCohesion.LackOfCohesionInfo;
 import main.windowConstruction.TestSmellWindowFactory;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,7 @@ public class StructuralDetectionAction extends AnAction {
         ArrayList<GeneralFixtureInfo> generalFixtureInfos = detector.executeDetectionForGeneralFixture();
         ArrayList<EagerTestInfo> eagerTestInfos = detector.executeDetectionForEagerTest();
         ArrayList<LackOfCohesionInfo> lackOfCohesionInfos = detector.executeDetectionForLackOfCohesion();
+        ArrayList<IndirectTestingInfo> indTestingInfos = detector.executeDetectionForIndirectTesting();
 
         System.out.println("\nDETECTOR STRUTTURALE: risultato dell'analisi.");
         for(GeneralFixtureInfo info : generalFixtureInfos){
@@ -35,10 +37,14 @@ public class StructuralDetectionAction extends AnAction {
             System.out.println("\n   LACK OF COHESION: " + info.toString());
         }
 
+        for (IndirectTestingInfo info : indTestingInfos){
+            System.out.println("\n INDIRECT TESTING: "+ info.toString());
+        }
+
         if(generalFixtureInfos.isEmpty() && eagerTestInfos.isEmpty() && lackOfCohesionInfos.isEmpty()){
             System.out.println("\nNon si è trovato alcuno Smell");
         } else {
-            TestSmellWindowFactory.createWindow(false, true, anActionEvent.getProject(), generalFixtureInfos, eagerTestInfos, lackOfCohesionInfos);
+            TestSmellWindowFactory.createWindow(false, true, anActionEvent.getProject(), generalFixtureInfos, eagerTestInfos, lackOfCohesionInfos,indTestingInfos);
         }
     }
 

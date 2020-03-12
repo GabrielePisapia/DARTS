@@ -5,6 +5,7 @@ import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.components.JBTabbedPane;
 import main.testSmellDetection.testSmellInfo.eagerTest.EagerTestInfo;
 import main.testSmellDetection.testSmellInfo.generalFixture.GeneralFixtureInfo;
+import main.testSmellDetection.testSmellInfo.indirectTesting.IndirectTestingInfo;
 import main.testSmellDetection.testSmellInfo.lackOfCohesion.LackOfCohesionInfo;
 
 
@@ -16,12 +17,14 @@ public class TestSmellWindowFactory {
     private static JPanel generalFixturePanel;
     private static JPanel eagerTestPanel;
     private static JPanel lackOfCohesionPanel;
+    private static JPanel indirectTestingPanel;
 
     public static void createWindow(Boolean textual, Boolean structural,
                                     Project project,
                                     ArrayList<GeneralFixtureInfo> listGFI,
                                     ArrayList<EagerTestInfo> listETI,
-                                    ArrayList<LackOfCohesionInfo> listLOCI) {
+                                    ArrayList<LackOfCohesionInfo> listLOCI,
+                                    ArrayList<IndirectTestingInfo> listITI) {
         PrincipalFrame principalFrame = null;
         //Controllo per vedere se la window esiste già.
         boolean frameExist = false;
@@ -41,11 +44,11 @@ public class TestSmellWindowFactory {
         JBTabbedPane detectionTp =  principalFrame.getDetectionTp();
         if(textual){
             principalFrame.removeTextualPanel();
-            principalFrame.addTextualPanel(createPanel(project, listGFI, listETI, listLOCI));
+            principalFrame.addTextualPanel(createPanel(project, listGFI, listETI, listLOCI,listITI));
         }
         if(structural){
             principalFrame.removeStructuralPanel();
-            principalFrame.addStructuralPanel(createPanel(project, listGFI, listETI, listLOCI));
+            principalFrame.addStructuralPanel(createPanel(project, listGFI, listETI, listLOCI,listITI));
         }
         principalFrame.add(detectionTp);
         // Mostra la schermata al centro dello schermo
@@ -60,7 +63,8 @@ public class TestSmellWindowFactory {
     private static JBTabbedPane createPanel(Project project,
                              ArrayList<GeneralFixtureInfo> listGFI,
                              ArrayList<EagerTestInfo> listETI,
-                             ArrayList<LackOfCohesionInfo> listLOCI){
+                             ArrayList<LackOfCohesionInfo> listLOCI,
+                             ArrayList<IndirectTestingInfo> listITI){
         // Controllo se ho trovato degli smells.
         if (listGFI != null) {
             generalFixturePanel = new GeneralFixturePanel(listGFI, project);
@@ -70,6 +74,9 @@ public class TestSmellWindowFactory {
         }
         if (listLOCI != null){
             lackOfCohesionPanel = new LackOfCohesionPanel(listLOCI, project);
+        }
+        if (listITI != null){
+            indirectTestingPanel = new IndirectTestingPanel(listITI,project);
         }
 
         //In questa parte costruisco le tab della window.
@@ -86,6 +93,11 @@ public class TestSmellWindowFactory {
         if (listLOCI != null) {
             JBScrollPane scroll = new JBScrollPane(lackOfCohesionPanel);
             tp.add("LackOfCohesion", scroll);
+        }
+
+        if (listITI != null){
+            JBScrollPane scroll = new JBScrollPane(indirectTestingPanel);
+            tp.add("IndirectTesting",scroll);
         }
         return tp;
     }

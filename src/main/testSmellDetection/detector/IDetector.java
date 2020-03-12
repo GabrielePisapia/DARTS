@@ -2,6 +2,7 @@ package main.testSmellDetection.detector;
 
 import main.testSmellDetection.testSmellInfo.eagerTest.EagerTestInfo;
 import main.testSmellDetection.testSmellInfo.generalFixture.GeneralFixtureInfo;
+import main.testSmellDetection.testSmellInfo.indirectTesting.IndirectTestingInfo;
 import main.testSmellDetection.testSmellInfo.lackOfCohesion.LackOfCohesionInfo;
 
 import java.util.ArrayList;
@@ -12,4 +13,6 @@ public interface IDetector {
     ArrayList<EagerTestInfo> executeDetectionForEagerTest();
 
     ArrayList<LackOfCohesionInfo> executeDetectionForLackOfCohesion();
+
+    ArrayList<IndirectTestingInfo> executeDetectionForIndirectTesting();
 }
